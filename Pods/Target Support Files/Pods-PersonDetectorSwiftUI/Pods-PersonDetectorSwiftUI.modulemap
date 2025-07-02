@@ -1,0 +1,6 @@
+framework module Pods_PersonDetectorSwiftUI {
+  umbrella header "Pods-PersonDetectorSwiftUI-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -6,7 +6,30 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4F7ADCBEE421E4D8F45033BD /* Pods_PersonDetectorSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6A368BD53D4D6DB71002C6B /* Pods_PersonDetectorSwiftUI.framework */; };
+		EBEEB31F2E15032200715D4C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EBEEB31E2E15032200715D4C /* RealmSwift */; };
+		EBEEB3202E1503E600715D4C /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = EBEEB31E2E15032200715D4C /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EB60E6772E14186B00DFC0DD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EBEEB3202E1503E600715D4C /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		5841C957BA473A4B1A198757 /* Pods-PersonDetectorSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonDetectorSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-PersonDetectorSwiftUI/Pods-PersonDetectorSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		A6A368BD53D4D6DB71002C6B /* Pods_PersonDetectorSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PersonDetectorSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB2A60E890D4831B53DCC2CE /* Pods-PersonDetectorSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PersonDetectorSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-PersonDetectorSwiftUI/Pods-PersonDetectorSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		EB60E6552E13E8F700DFC0DD /* PersonDetectorSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonDetectorSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -23,17 +46,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBEEB31F2E15032200715D4C /* RealmSwift in Frameworks */,
+				4F7ADCBEE421E4D8F45033BD /* Pods_PersonDetectorSwiftUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C43F5607779C87F32FE1FFA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A6A368BD53D4D6DB71002C6B /* Pods_PersonDetectorSwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E325C28314901B05061F99DF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5841C957BA473A4B1A198757 /* Pods-PersonDetectorSwiftUI.debug.xcconfig */,
+				AB2A60E890D4831B53DCC2CE /* Pods-PersonDetectorSwiftUI.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		EB60E64C2E13E8F700DFC0DD = {
 			isa = PBXGroup;
 			children = (
 				EB60E6572E13E8F700DFC0DD /* PersonDetectorSwiftUI */,
 				EB60E6562E13E8F700DFC0DD /* Products */,
+				E325C28314901B05061F99DF /* Pods */,
+				3C43F5607779C87F32FE1FFA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -52,9 +96,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EB60E6602E13E8F900DFC0DD /* Build configuration list for PBXNativeTarget "PersonDetectorSwiftUI" */;
 			buildPhases = (
+				982BA46A3676ED01BCC56918 /* [CP] Check Pods Manifest.lock */,
 				EB60E6512E13E8F700DFC0DD /* Sources */,
 				EB60E6522E13E8F700DFC0DD /* Frameworks */,
 				EB60E6532E13E8F700DFC0DD /* Resources */,
+				EB60E6772E14186B00DFC0DD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -65,6 +111,7 @@
 			);
 			name = PersonDetectorSwiftUI;
 			packageProductDependencies = (
+				EBEEB31E2E15032200715D4C /* RealmSwift */,
 			);
 			productName = PersonDetectorSwiftUI;
 			productReference = EB60E6552E13E8F700DFC0DD /* PersonDetectorSwiftUI.app */;
@@ -94,6 +141,9 @@
 			);
 			mainGroup = EB60E64C2E13E8F700DFC0DD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EBEEB31D2E15032200715D4C /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EB60E6562E13E8F700DFC0DD /* Products */;
 			projectDirPath = "";
@@ -113,6 +163,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		982BA46A3676ED01BCC56918 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PersonDetectorSwiftUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EB60E6512E13E8F700DFC0DD /* Sources */ = {
@@ -248,6 +323,7 @@
 		};
 		EB60E6612E13E8F900DFC0DD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5841C957BA473A4B1A198757 /* Pods-PersonDetectorSwiftUI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -256,6 +332,7 @@
 				DEVELOPMENT_TEAM = 69TA9S59X6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We Need Access to Camera";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -276,6 +353,7 @@
 		};
 		EB60E6622E13E8F900DFC0DD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB2A60E890D4831B53DCC2CE /* Pods-PersonDetectorSwiftUI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -284,6 +362,7 @@
 				DEVELOPMENT_TEAM = 69TA9S59X6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We Need Access to Camera";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +403,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EBEEB31D2E15032200715D4C /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 20.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EBEEB31E2E15032200715D4C /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EBEEB31D2E15032200715D4C /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EB60E64D2E13E8F700DFC0DD /* Project object */;
 }

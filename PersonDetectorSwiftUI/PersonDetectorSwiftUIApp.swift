@@ -11,7 +11,8 @@ import SwiftUI
 struct PersonDetectorSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
+            ListView(viewModel: ListViewModel(databaseManager: DatabaseManager()))
         }
     }
 }
