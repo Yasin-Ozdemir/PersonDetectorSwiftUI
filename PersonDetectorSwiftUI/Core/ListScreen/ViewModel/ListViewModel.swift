@@ -8,13 +8,17 @@
 import Foundation
 import RealmSwift
 protocol ListViewModelProtocol: ObservableObject {
-   
+    func deleteListModel(with id : ObjectId)
 }
 final class ListViewModel: ListViewModelProtocol {
+    
     private var databaseManager: DatabaseManagerProtocol
     @Published var listModels: [ListModel] = []
+    private var listModelsTemp: [ListModel] = []
+    private var isFiltered : Bool = false
     @Published var showCameraView: Bool = false
     @Published var showDeleteAlert: Bool = false
+    
     private var notificationToken: NotificationToken?
 
     init(databaseManager: DatabaseManagerProtocol) {
@@ -58,15 +62,27 @@ final class ListViewModel: ListViewModelProtocol {
         Task {
             do {
                 try await databaseManager.delete(model: ListModel.self, id: id)
-                DispatchQueue.main.async {
+                
+                await MainActor.run {
                     self.showDeleteAlert.toggle()
                 }
-                
+                  
             } catch {
                 print(error)
             }
 
         }
+    }
+    
+    
+    func filterListModel(){
+        if !isFiltered {
+            self.listModelsTemp = listModels
+            self.listModels = listModels.filter{$0.isPersonDetected}
+        }else {
+            self.listModels = listModelsTemp
+        }
+        isFiltered.toggle()
     }
 
 }

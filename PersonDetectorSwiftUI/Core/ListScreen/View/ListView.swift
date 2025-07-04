@@ -14,14 +14,17 @@ struct ListView: View {
     ]
    
     @StateObject var viewModel: ListViewModel
-
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 15) {
                     ForEach(viewModel.listModels) { listModel in
-                        ListViewItem(listModel: listModel) {
+                        ListViewItem(listModel: listModel)
+                        {
                             viewModel.deleteListModel(with: listModel._id)
+                        }
+                        onTapAction: {
+                            listModel.isPersonDetected ? viewModel.showCameraView.toggle() : nil
                         }
                     }
                 }
@@ -39,10 +42,18 @@ struct ListView: View {
                         Image(systemName: "plus").tint(.primary)
                     }
                 }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            viewModel.filterListModel()
+                        } label: {
+                            Image(systemName: "line.3.horizontal.decrease").tint(.primary)
+                        }
+                    }
             })
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationDestination(isPresented: $viewModel.showCameraView) {
-                    MainCameraView(viewModel: CameraViewModel(databaseManager: DatabaseManager()))
+                    MainCameraView(viewModel: CameraViewModel(databaseManager: DatabaseManager(), personDetectorManager: PersonDetectorManager(inputWidth: 640, inputHeight: 640, confidenceThreshold: 0.3)))
             }
         }
     }

@@ -7,11 +7,10 @@
 
 import UIKit
 import AVFoundation
-protocol CustomCameraDelegate: AnyObject {
-    func didCaptureImage(_ imageData: Data)
-}
-class CameraViewController: UIViewController {
-    weak var delegate: CustomCameraDelegate?
+
+final class CameraViewController: UIViewController {
+    weak var delegate: CameraDelegate?
+    
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private var session: AVCaptureSession!
     private var photoOutput: AVCapturePhotoOutput!

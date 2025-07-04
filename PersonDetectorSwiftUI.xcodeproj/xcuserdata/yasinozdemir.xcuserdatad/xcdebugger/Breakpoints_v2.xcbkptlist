@@ -14,25 +14,9 @@
             filePath = "PersonDetectorSwiftUI/Core/ListScreen/ViewModel/ListViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "setupObservations()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4495812C-1B20-45BF-B696-9211B960BC06"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PersonDetectorSwiftUI/Utilties/DatabaseManager/DatabaseManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
             endingLineNumber = "31"
-            landmarkName = "getAll(model:)"
+            landmarkName = "setupObservations()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

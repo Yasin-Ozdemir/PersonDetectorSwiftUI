@@ -20,8 +20,8 @@ protocol DatabaseManagerProtocol{
     func delete<T: Object>(model : T.Type ,  id : ObjectId) async throws
 }
 
-class DatabaseManager: DatabaseManagerProtocol {
-   
+final class DatabaseManager: DatabaseManagerProtocol {
+
     func getAll<T: Object>(model : T.Type) -> Result<Results<T> , Error>{
         do {
             let realm =  try Realm()
@@ -33,6 +33,7 @@ class DatabaseManager: DatabaseManagerProtocol {
         }
     }
 
+    
     func save<T: Object>(_ object : T) async throws {
         
         try await withCheckedThrowingContinuation { continuation in
@@ -48,6 +49,7 @@ class DatabaseManager: DatabaseManagerProtocol {
             }
         }
     }
+    
     
     func delete<T: Object>(model : T.Type ,  id : ObjectId ) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>)  in

@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+protocol CameraDelegate: AnyObject {
+    func didCaptureImage(_ imageData: Data)
+}
+
 struct CameraView: UIViewControllerRepresentable {
   
     private let didCaptureImage : (Data) -> Void
@@ -27,7 +31,7 @@ struct CameraView: UIViewControllerRepresentable {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject, CustomCameraDelegate {
+    class Coordinator: CameraDelegate {
         let parent: CameraView
         
         init(_ parent: CameraView) {
@@ -35,7 +39,6 @@ struct CameraView: UIViewControllerRepresentable {
         }
         
         func didCaptureImage(_ imageData: Data) {
-            // person detect işlemi yapılacak
             parent.didCaptureImage(imageData)
         }
        
