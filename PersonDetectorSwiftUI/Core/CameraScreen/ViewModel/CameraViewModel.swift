@@ -27,9 +27,10 @@ final class CameraViewModel: CameraViewModelProtocol, ObservableObject {
     }
 
     func saveListModel(_ model: ListModel) {
-        Task(priority: .high) {
+        Task(priority: .userInitiated) {
             do {
                 try await databaseManager.save(model)
+                NotificationCenter.default.post(name: .photoSaved, object: nil)
 
                 await MainActor.run {
                     self.showSuccessAlert.toggle()
@@ -42,6 +43,7 @@ final class CameraViewModel: CameraViewModelProtocol, ObservableObject {
     }
 
     func detectPerson(with image: UIImage) {
+        let startTime = Date()
         Task(priority: .userInitiated) {
             let result = await personDetectorManager.detectPerson(with: image)
 
@@ -59,7 +61,10 @@ final class CameraViewModel: CameraViewModelProtocol, ObservableObject {
                     
                     self.customAlertImage = bluredImage
                     self.showCustomAlert.toggle()
-
+                    
+                    let endTime = Date()
+                    let duration = endTime.timeIntervalSince(startTime)
+                    print(" Son Detect Süre: \(duration) saniye") // detect ise 0.52 - 0.58 saniye civarı detect yoksa 0.000025 saniye 200 - 240 mb ram kullanımı
 
                 }
             case .failure(let failure):
@@ -69,12 +74,18 @@ final class CameraViewModel: CameraViewModelProtocol, ObservableObject {
                         return
                     }
 
-                    self.saveListModel(ListModel(imageData: imageData, date: Date().currentDateString(), isPersonDetected: false))
+                    self.saveListModel(ListModel(imageData: imageData, date: Date(), isPersonDetected: false))
+                    let endTime = Date()
+                    let duration = endTime.timeIntervalSince(startTime)
+
+                    print(" Son No Detect Süre: \(duration) saniye") // 0.46 - 0.47 saniye civarı
                 } else {
                     self.showErrorAlert.toggle()
                 }
             }
         }
+       
+
 
     }
 

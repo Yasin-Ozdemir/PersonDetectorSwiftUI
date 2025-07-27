@@ -11,6 +11,7 @@ enum BlurLevel : Int {
     case mid = 40
     case high = 60
 }
+
 extension UIImage{
     func getRgbData() -> Data?{
         guard let cgImage = self.cgImage else { return nil }
@@ -79,8 +80,6 @@ extension UIImage{
 
       let context = CIContext()
       var outputImage = ciImage
-     
-   
      
       let cropped = ciImage.cropped(to: rect)
       let blurred = cropped

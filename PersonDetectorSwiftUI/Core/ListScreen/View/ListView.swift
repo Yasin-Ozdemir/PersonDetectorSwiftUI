@@ -18,13 +18,19 @@ struct ListView: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 15) {
-                    ForEach(viewModel.listModels) { listModel in
+                    ForEach(viewModel.listModels, id: \._id) { listModel in
+                       
                         ListViewItem(listModel: listModel)
                         {
                             viewModel.deleteListModel(with: listModel._id)
                         }
                         onTapAction: {
                             listModel.isPersonDetected ? viewModel.showCameraView.toggle() : nil
+                        }
+                        .onAppear {
+                            if listModel == viewModel.listModels.last {
+                                viewModel.fetchListModelsWithPagination()
+                            }
                         }
                     }
                 }

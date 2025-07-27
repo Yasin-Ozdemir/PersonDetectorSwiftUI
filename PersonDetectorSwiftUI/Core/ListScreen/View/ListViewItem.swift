@@ -19,17 +19,39 @@ struct ListViewItem: View {
     }
     
     var body: some View {
-        if let listModel {
-            content(for: listModel)
-        }else {
-            EmptyView()
+        VStack {
+            Image(uiImage: getImage(with: listModel?.imageData))
+                .resizable()
+                .frame(width: 150, height: 210)
+                .padding(.horizontal, 10)
+                .padding(.top , 10)
+          
+
+            Text(listModel?.date.currentDateString() ?? "Unkown")
+                .font(.system(size: 15, weight: .semibold))
         }
+        .onTapGesture {
+            onTapAction()
+        }
+        .contextMenu(menuItems: {
+            Button {
+               contextMenuAction()
+            } label: {
+                Text("Remove")
+            }
+
+        })
+        .background(
+            (listModel?.isPersonDetected ?? false ? Color.red.opacity(0.4) : Color.primary.opacity(0.1))
+                .cornerRadius(10)
+        )
+        
        
     }
     
-    func getImage(with data : Data) -> UIImage {
-        guard let uiImage = UIImage(data: data) else {
-           return UIImage(resource: .test)
+    func getImage(with data : Data?) -> UIImage {
+        guard let data , let uiImage = UIImage(data: data) else {
+            return UIImage(resource: .placeholder)
         }
         return uiImage
     }
@@ -43,8 +65,9 @@ extension ListViewItem {
                 .frame(width: 150, height: 210)
                 .padding(.horizontal, 10)
                 .padding(.top , 10)
+          
 
-            Text(model.date)
+            Text(model.date.currentDateString())
                 .font(.system(size: 15, weight: .semibold))
         }
         .onTapGesture {
@@ -52,7 +75,7 @@ extension ListViewItem {
         }
         .contextMenu(menuItems: {
             Button {
-                self.contextMenuAction()
+               contextMenuAction()
             } label: {
                 Text("Remove")
             }

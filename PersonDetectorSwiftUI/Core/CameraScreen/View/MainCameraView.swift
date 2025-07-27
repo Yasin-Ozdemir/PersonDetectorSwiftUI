@@ -30,22 +30,15 @@ struct MainCameraView: View {
                     guard let imageData = alertImage.jpegData(compressionQuality: 0.5) else {
                         return
                     }
-                    viewModel.showCustomAlert.toggle()
-                    viewModel.saveListModel(ListModel(imageData: imageData, date: Date().currentDateString(), isPersonDetected: true))
-                    
+                    viewModel.saveListModel(ListModel(imageData: imageData, date: Date(), isPersonDetected: true))
+                    viewModel.showCustomAlert.toggle()                    
                 }
-
-                    
             }
 
         }
-
-
             .alert("HATA", isPresented: $viewModel.showErrorAlert, actions: {
-
         })
             .alert("Kayıt Başarılı", isPresented: $viewModel.showSuccessAlert) {
-
         }
     }
 }

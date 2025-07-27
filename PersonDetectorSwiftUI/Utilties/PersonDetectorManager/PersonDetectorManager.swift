@@ -30,7 +30,7 @@ final class PersonDetectorManager: PersonDetectorManagerProtocol {
     }
 
     private func setupYolo() {
-        guard let modelPath = Bundle.main.path(forResource: "person-det 1", ofType: "tflite") else {
+        guard let modelPath = Bundle.main.path(forResource: "newest_person_det_model", ofType: "tflite") else {
             print("model yok knk")
             return
         }
@@ -47,8 +47,8 @@ final class PersonDetectorManager: PersonDetectorManagerProtocol {
 
     
     func detectPerson(with image: UIImage) async -> Result<DetectedModel , Error> {
-        
-        await withCheckedContinuation { continuation  in
+      let startTime = Date()
+      let result =  await withCheckedContinuation { (continuation: CheckedContinuation<Result<DetectedModel, Error>, Never>) in
             guard let inputImage = configureImage(image), let inputData = inputImage.getRgbData(), let interpreter else {
                  continuation.resume(returning: .failure(PersonDetectorError.failedToDetectPerson))
                 return
@@ -76,6 +76,10 @@ final class PersonDetectorManager: PersonDetectorManagerProtocol {
                  continuation.resume(returning: .failure(PersonDetectorError.failedToDetectPerson))
             }
          }
+        
+        let endTime = Date()
+        print("Detect Süre: \(endTime.timeIntervalSince(startTime))")
+        return result
        
     }
 

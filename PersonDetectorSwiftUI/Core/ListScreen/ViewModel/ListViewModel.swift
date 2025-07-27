@@ -7,15 +7,20 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 protocol ListViewModelProtocol: ObservableObject {
     func deleteListModel(with id : ObjectId)
 }
 final class ListViewModel: ListViewModelProtocol {
     
     private var databaseManager: DatabaseManagerProtocol
-    @Published var listModels: [ListModel] = []
+
     private var listModelsTemp: [ListModel] = []
     private var isFiltered : Bool = false
+    private var lastDate : Date?
+    private var moreData : Bool = true
+    
+    @Published var listModels: [ListModel] = []
     @Published var showCameraView: Bool = false
     @Published var showDeleteAlert: Bool = false
     
@@ -23,47 +28,40 @@ final class ListViewModel: ListViewModelProtocol {
 
     init(databaseManager: DatabaseManagerProtocol) {
         self.databaseManager = databaseManager
-        setupObservations()
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: .photoSaved, object: nil)
+        fetchListModelsWithPagination()
+        
     }
 
-    private func setupObservations() {
-
-        let results = databaseManager.getAll(model: ListModel.self)
-
-        switch results {
-
-        case .success(let objects):
-            self.notificationToken = objects.observe({ [weak self] changes in
-                guard let self else {
-                    return
-                }
-                switch changes {
-
-                case .initial(let objects):
-                    self.listModels = Array(objects)
-
-                case .update(let objects, deletions: _, insertions: _, modifications: _):
-                    self.listModels = Array(objects)
-
-                case .error(let error):
-                    print(error.localizedDescription)
-                }
-            })
-
-        case .failure(let error):
-            print (error.localizedDescription)
+    
+    func fetchListModelsWithPagination(){
+        let startTime = Date()
+        guard moreData , !isFiltered else { return }
+        do {
+            let objects = try databaseManager.getObjects(model: ListModel.self, lastDate: lastDate, pageSize: 20)
+            
+            guard !objects.isEmpty else {
+                moreData.toggle()
+                return
+            }
+            
+            self.lastDate = objects.last?.date
+            self.listModels.append(contentsOf: objects)
+            let endTime = Date()
+            print("Görünme Süresi: \(endTime.timeIntervalSince(startTime)) saniye") // 0.048 - 0.050 civarı görünme süresi ama scroll ettikçe ram yine şişiyor
+        }catch{
+            print("pagination error")
         }
-
     }
-
+    
 
     func deleteListModel(with id : ObjectId) {
-        
         Task {
             do {
                 try await databaseManager.delete(model: ListModel.self, id: id)
-                
+               
                 await MainActor.run {
+                 // listModelsden kaldır
                     self.showDeleteAlert.toggle()
                 }
                   
@@ -84,5 +82,14 @@ final class ListViewModel: ListViewModelProtocol {
         }
         isFiltered.toggle()
     }
-
+    
+    @objc func reload(){
+        DispatchQueue.main.async{
+            self.listModels = []
+            self.moreData = true
+            self.lastDate = nil
+            self.fetchListModelsWithPagination()
+        }
+    }
+ 
 }

@@ -15,22 +15,29 @@ enum DatabaseError : Error {
 }
 
 protocol DatabaseManagerProtocol{
-    func getAll<T: Object>(model : T.Type) -> Result<Results<T> , Error>
     func save<T: Object>(_ object : T) async throws
     func delete<T: Object>(model : T.Type ,  id : ObjectId) async throws
+    func getObjects<T: Object>(model: T.Type, lastDate: Date?, pageSize: Int) throws -> [T]
 }
 
 final class DatabaseManager: DatabaseManagerProtocol {
 
-    func getAll<T: Object>(model : T.Type) -> Result<Results<T> , Error>{
-        do {
-            let realm =  try Realm()
-            let objects = realm.objects(model.self)
-            print("objeler: " , objects)
-            return .success(objects)
-        }catch {
-            return .failure(error)
+        
+    func getObjects<T: Object>(model: T.Type, lastDate: Date?, pageSize: Int) throws -> [T] {
+        // Results lazy tabanlıdır.
+
+        let realm = try Realm()
+        var result: Results<T>
+
+        if let lastDate {
+            result = realm.objects(model).filter("date < %@", lastDate).sorted(byKeyPath: "date", ascending: false)
+            
+        } else {
+            result = realm.objects(model).sorted(byKeyPath: "date", ascending: false)
         }
+
+        let page = Array(result.prefix(pageSize))
+        return page
     }
 
     
@@ -51,7 +58,7 @@ final class DatabaseManager: DatabaseManagerProtocol {
     }
     
     
-    func delete<T: Object>(model : T.Type ,  id : ObjectId ) async throws {
+    func delete<T: Object>(model : T.Type ,  id : ObjectId) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>)  in
             do {
                 let realm =   try Realm()

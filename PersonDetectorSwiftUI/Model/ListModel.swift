@@ -8,11 +8,11 @@ import RealmSwift
 import Foundation
 final class ListModel : Object, Identifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
-    @Persisted var date: String
+    @Persisted var date: Date
     @Persisted var imageData : Data
     @Persisted var isPersonDetected : Bool
     
-    convenience init(imageData: Data, date: String , isPersonDetected : Bool) {
+    convenience init(imageData: Data, date: Date , isPersonDetected : Bool) {
         self.init()
         self.imageData = imageData
         self.date = date
